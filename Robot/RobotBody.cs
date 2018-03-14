@@ -54,7 +54,7 @@ public class RobotBody : MonoBehaviour {
     private void DestroyRobot(){
         PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money", 0) + moneyReward);
         Instantiate(deathObject, transform.position, Quaternion.identity);
-        wave.AddToRobotCount(-1);
+//        wave.AddToRobotCount(-1);
         Destroy(robotParent);
     }
 }

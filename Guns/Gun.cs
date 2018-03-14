@@ -9,6 +9,7 @@ public class Gun : MonoBehaviour {
 
     public GameObject[] randomBullet;
     public GameObject noBullets;
+    public GameObject muzzleFlare;
     public float fireSpeed;
     public Transform bulletStart;
     public bool infiniteBullets = false;
@@ -43,10 +44,16 @@ public class Gun : MonoBehaviour {
             if (bulletsRemaining > 0 || infiniteBullets == true)
             {
                 bulletsRemaining -= 1;
-                CreateBullet(randomBullet[Random.Range(0, randomBullet.Length)]);
+                if (randomBullet.Length > 0)
+                {
+                    CreateBullet(randomBullet[Random.Range(0, randomBullet.Length)]);
+                }
                 if (recoil)
                 {
                     recoil.Recoil();
+                }
+                if(muzzleFlare){
+                    Instantiate(muzzleFlare, bulletStart.position, muzzleFlare.transform.rotation);
                 }
 
             }

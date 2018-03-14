@@ -6,16 +6,18 @@ public class ShootInRange : MonoBehaviour {
 
 
     public Gun gun;
-    public float zPosMax, zPosMin;
+    public float timeBeforeShoot = 2;
 
+    float startTime;
 	// Use this for initialization
 	void Start () {
+        startTime = Time.time;
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (transform.position.z > zPosMax || transform.position.z < zPosMin)
+        if (Time.time >= timeBeforeShoot + startTime)
         {
             gun.Shoot();
         }

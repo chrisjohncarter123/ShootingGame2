@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114104553392112610}
   - component: {fileID: 114980000584780568}
   - component: {fileID: 114892683944289492}
-  - component: {fileID: 114562594185274930}
+  - component: {fileID: 114410236901707108}
   m_Layer: 0
   m_Name: RobotMover1
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1768430517204898}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.91630554, y: -1.032795, z: 33.884365}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -61,7 +61,7 @@ MonoBehaviour:
   maxF: 5
   minS: -10
   maxS: 10
---- !u!114 &114562594185274930
+--- !u!114 &114410236901707108
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -69,11 +69,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1768430517204898}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4789f50f413e49b6adc6726a641cf39, type: 3}
+  m_Script: {fileID: 11500000, guid: b35a633547741467bb5ade261c8d4d73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zPosMax: 20
-  zPosMin: 0
+  timeMin: 3
+  timeMax: 5
 --- !u!114 &114892683944289492
 MonoBehaviour:
   m_ObjectHideFlags: 1
