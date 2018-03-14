@@ -7,12 +7,15 @@ public class Gun : MonoBehaviour {
     [SerializeField]
     ShootRecoil recoil;
 
-    public GameObject bullet;
+    public GameObject[] randomBullet;
     public GameObject noBullets;
     public float fireSpeed;
     public Transform bulletStart;
     public bool infiniteBullets = false;
     const float bulletLife = 5;
+
+    [SerializeField]
+    bool isAutomatic = true;
 
     int bulletsRemaining = 100;
 
@@ -28,6 +31,9 @@ public class Gun : MonoBehaviour {
 
 		
 	}
+    public bool GetIsAutomatic(){
+        return isAutomatic;
+    }
     public int GetBulletsRemaining(){
         return bulletsRemaining;
     }
@@ -37,7 +43,7 @@ public class Gun : MonoBehaviour {
             if (bulletsRemaining > 0 || infiniteBullets == true)
             {
                 bulletsRemaining -= 1;
-                CreateBullet(bullet);
+                CreateBullet(randomBullet[Random.Range(0, randomBullet.Length)]);
                 if (recoil)
                 {
                     recoil.Recoil();
@@ -53,12 +59,13 @@ public class Gun : MonoBehaviour {
 
     void CreateBullet(GameObject bulletObject){
         GameObject newBullet = Instantiate(
-                                           bullet,
-                                           bulletStart.position,
-                                           Quaternion.Euler(bulletStart.eulerAngles)
+            bulletObject,
+            bulletStart.position,
+            Quaternion.Euler(bulletStart.eulerAngles + bulletObject.transform.eulerAngles)
                                            );
 
         Destroy(newBullet, bulletLife);
     }
+
 
 }

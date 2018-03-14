@@ -8,11 +8,17 @@ public class PlayerPrefsAdd : MonoBehaviour {
     public string key;
     public string value;
     public ValueType valueType;
+    public SetType setType = SetType.SetEqual;
 
     public enum ValueType{
         Int,
         String,
         Float
+    }
+
+    public enum SetType{
+        Add,
+        SetEqual
     }
 	// Use this for initialization
 	void Start () {
@@ -21,9 +27,22 @@ public class PlayerPrefsAdd : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+//        Debug.Log(key + PlayerPrefs.GetInt(key, 0));
 		
 	}
+    private void SetValue(int val){
+        switch (setType){
+            case SetType.Add:
+                PlayerPrefs.SetInt(key, PlayerPrefs.GetInt(key, 0) + val);
+                Debug.Log(name + " " + key + " added " + value);
+                break;
 
+            case SetType.SetEqual:
+                PlayerPrefs.SetInt(key, val);
+                Debug.Log(name + " " + key + " set to " + value);
+                break;
+        }
+    }
     public void StartState()
     {
         switch(valueType) {
@@ -33,13 +52,16 @@ public class PlayerPrefsAdd : MonoBehaviour {
                 break;
             case ValueType.Int:
                 int intValue = Int32.Parse(value);
-                PlayerPrefs.SetInt(key, intValue);
+                SetValue(intValue);
+
                 break;
             case ValueType.String:
                 PlayerPrefs.SetString(key, value);
                 break;
         }
+
     }
+
     public void EndState()
     {
         

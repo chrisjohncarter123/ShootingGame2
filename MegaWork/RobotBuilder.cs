@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class RobotBuilder : MonoBehaviour {
 
+    RobotWaveGenerator wave;
     public GameObject[] bodies;
     public GameObject[] eyes;
     public GameObject[] mouths;
@@ -17,20 +18,31 @@ public class RobotBuilder : MonoBehaviour {
 
     public Transform robotStartingPosition;
 
+    public int totalRobots = 10;
+    public float waitTime = 1.5f;
+
+    float lastRobotCreate = 0;
+    int robots = 0;
 
 
+    public void SetRobotWaveGenerator(RobotWaveGenerator wave)
+    {
+        this.wave = wave;
+    }
 	// Use this for initialization
 	void Start () {
-
-        for (int i = 0; i < 20; i++){
-            BuildRobot();
-        }
-        
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if(Time.time >= lastRobotCreate + waitTime){
+            BuildRobot();
+            robots++;
+            if(robots >= totalRobots){
+                Destroy(gameObject);
+            }
+        }
 		
 	}
 
@@ -41,12 +53,12 @@ public class RobotBuilder : MonoBehaviour {
         circle.y *= creationRadiusY;
         circle.x += robotStartingPosition.position.x;
         circle.y += robotStartingPosition.position.y;
-        return new Vector3(circle.x, circle.y, 0);
+        return new Vector3(circle.x, circle.y, robotStartingPosition.transform.position.z);
     }
     public void BuildRobot(){
 
 
-
+        wave.AddToRobotCount(1);
 
         GameObject mover = Instantiate(
             movers[Random.Range(0, movers.Length)],
@@ -54,9 +66,13 @@ public class RobotBuilder : MonoBehaviour {
             Quaternion.identity);
         Debug.Log(mover.transform.position);
 
+
+
         int bodyIndex = Random.Range(0, bodies.Length);
         GameObject body = Instantiate(
-            bodies[bodyIndex]);
+            bodies[bodyIndex],
+            Vector3.zero,
+            bodies[bodyIndex].transform.rotation);
 
         body.transform.localPosition = Vector3.zero;
         

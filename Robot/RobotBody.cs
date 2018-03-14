@@ -9,7 +9,12 @@ public class RobotBody : MonoBehaviour {
     public GameObject deathObject;
     public int maxHealth = 3;
     int currentHealth;
+    RobotWaveGenerator wave;
 
+
+    public void SetRobotWaveGenerator(RobotWaveGenerator wave){
+        this.wave = wave;
+    }
 	// Use this for initialization
 	void Start () {
         currentHealth = maxHealth;
@@ -42,9 +47,14 @@ public class RobotBody : MonoBehaviour {
         currentHealth -= dammage;
 
         if(currentHealth == 0){
-            PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money", 0) + moneyReward);
-            Instantiate(deathObject, transform.position, Quaternion.identity);
-            Destroy(robotParent);
+            DestroyRobot();
         }
+    }
+
+    private void DestroyRobot(){
+        PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money", 0) + moneyReward);
+        Instantiate(deathObject, transform.position, Quaternion.identity);
+        wave.AddToRobotCount(-1);
+        Destroy(robotParent);
     }
 }

@@ -14,9 +14,17 @@ public class PlayerShooter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetMouseButton(0))
+        if (gun.GetIsAutomatic())
         {
-            gun.Shoot();
+            if(Input.GetMouseButton(0)){
+                gun.Shoot();
+            }
+
+        }
+        else {
+            if (Input.GetMouseButtonDown(0)){
+                gun.Shoot();
+            }
         }
 		
 	}
