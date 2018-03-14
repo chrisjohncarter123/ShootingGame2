@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4059612455199684}
   - component: {fileID: 114824484645473560}
   - component: {fileID: 114155126836985406}
+  - component: {fileID: 114526340246279148}
+  - component: {fileID: 114391378426275102}
   m_Layer: 0
   m_Name: RobotMover2
   m_TagString: Untagged
@@ -52,7 +54,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b428ac27885dd4cfbb465dc4ca010406, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  magnitude: {x: 0, y: 0, z: 1}
+  magnitude: {x: 0, y: 0, z: -3}
+  moveType: 1
+--- !u!114 &114391378426275102
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1144542643131246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4789f50f413e49b6adc6726a641cf39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zPosMax: 20
+  zPosMin: 0
+--- !u!114 &114526340246279148
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1144542643131246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f6081b9ea303471c8cdbb796acea014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  targetTag: Player
+  speed: 0.1
 --- !u!114 &114824484645473560
 MonoBehaviour:
   m_ObjectHideFlags: 1

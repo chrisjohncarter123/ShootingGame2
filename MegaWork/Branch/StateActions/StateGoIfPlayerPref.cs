@@ -22,11 +22,11 @@ public class StateGoIfPlayerPref : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void StartState () {
 		
 	}
 
-    public void StartState()
+    void Update()
     {
         if (valueType == PlayerPrefsAdd.ValueType.Float)
         {
@@ -47,10 +47,12 @@ public class StateGoIfPlayerPref : MonoBehaviour {
                     }
                     break;
                 case PlayerPrefsAdd.ValueType.String:
-                    PlayerPrefs.SetString(key, value);
+                    //PlayerPrefs.SetString(key, value);
                     string playerPrefsStringValue = PlayerPrefs.GetString(key);
+                    Debug.Log("here");
                     if (value.Equals(playerPrefsStringValue))
                     {
+                        Debug.Log("here2");
                         GetComponent<State>().SendMessageToBranch("NextState");
                         EndState();
                     }

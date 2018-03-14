@@ -37,7 +37,6 @@ GameObject:
   - component: {fileID: 33672104905640124}
   - component: {fileID: 65404722130287998}
   - component: {fileID: 23554001970690626}
-  - component: {fileID: 114136591192702756}
   m_Layer: 0
   m_Name: Body1
   m_TagString: Untagged
@@ -56,6 +55,21 @@ GameObject:
   - component: {fileID: 114080332223818610}
   m_Layer: 0
   m_Name: Body1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1390119409662496
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4244813431962966}
+  m_Layer: 0
+  m_Name: Eyes1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,14 +107,14 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &1856337819815406
 GameObject:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4250553360673812}
   m_Layer: 0
-  m_Name: Eyes1
+  m_Name: Shooter1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -119,6 +133,19 @@ Transform:
   m_Father: {fileID: 4270582125149006}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4244813431962966
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1390119409662496}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.475, z: 0.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4871345135444582}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4250553360673812
 Transform:
   m_ObjectHideFlags: 1
@@ -126,11 +153,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1856337819815406}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.475, z: 0.75}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4871345135444582}
-  m_RootOrder: 0
+  m_Father: {fileID: 4270582125149006}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4270582125149006
 Transform:
@@ -139,10 +166,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1240425049152800}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 65.86576, y: 2.19, z: -22.81}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4098909383188740}
+  - {fileID: 4250553360673812}
   - {fileID: 4871345135444582}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -183,11 +211,11 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: -0.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4250553360673812}
+  - {fileID: 4244813431962966}
   - {fileID: 4514989806821744}
   - {fileID: 4737663579807682}
   m_Father: {fileID: 4270582125149006}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23554001970690626
 MeshRenderer:
@@ -253,20 +281,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94d6dda6843244a389866f0ab670e2f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eyesPosition: {fileID: 4250553360673812}
+  moneyReward: 10
+  eyesPosition: {fileID: 4244813431962966}
   nosePosition: {fileID: 4737663579807682}
   mouthPosition: {fileID: 4514989806821744}
---- !u!114 &114136591192702756
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1192653498610224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94d6dda6843244a389866f0ab670e2f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eyesPosition: {fileID: 0}
-  nosePosition: {fileID: 0}
-  mouthPosition: {fileID: 0}
+  shooterPosition: {fileID: 4250553360673812}
+  deathObject: {fileID: 0}
+  maxHealth: 3
