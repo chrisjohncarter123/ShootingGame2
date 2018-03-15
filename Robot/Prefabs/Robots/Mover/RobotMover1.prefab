@@ -38,7 +38,7 @@ Transform:
   m_GameObject: {fileID: 1768430517204898}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -54,20 +54,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 765465f77299f4df1b37b26463704b9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  n: 3
-  minM: -0.025
-  maxM: 0.025
+  n: 5
+  minM: -0.075
+  maxM: 0.075
   minF: -5
   maxF: 5
-  minS: -10
-  maxS: 10
+  minS: -20
+  maxS: 20
+  xMult: 1
+  yMult: 0.1
+  zMult: 1
 --- !u!114 &114410236901707108
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1768430517204898}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b35a633547741467bb5ade261c8d4d73, type: 3}
   m_Name: 
@@ -99,5 +102,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b428ac27885dd4cfbb465dc4ca010406, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  magnitude: {x: 0, y: 0, z: -3}
-  moveType: 1
+  magnitude: {x: 0, y: 0, z: 3}
+  moveType: 0

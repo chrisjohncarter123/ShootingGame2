@@ -17,13 +17,13 @@ public class PlayerShooter : MonoBehaviour {
         if (gun.GetIsAutomatic())
         {
             if(Input.GetMouseButton(0)){
-                gun.Shoot();
+                gun.gameObject.SendMessage("Shoot");
             }
 
         }
         else {
             if (Input.GetMouseButtonDown(0)){
-                gun.Shoot();
+                gun.gameObject.SendMessage("Shoot");
             }
         }
 		

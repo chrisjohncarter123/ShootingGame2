@@ -103,7 +103,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1758292278496008
 GameObject:
   m_ObjectHideFlags: 1
@@ -361,12 +361,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b66d57a2317d948d0b7aa649eeb9051f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fireType: 0
+  dammage: 0
   recoil: {fileID: 114185945723984164}
-  bullet: {fileID: 1136457544742562, guid: 91786fa38fbb243bc842540b09574c9e, type: 2}
+  randomBullet:
+  - {fileID: 1574087591066524, guid: bdbab8ce59b854d2bb5088a01e548d3f, type: 2}
   noBullets: {fileID: 0}
+  muzzleFlare: {fileID: 0}
   fireSpeed: 2
   bulletStart: {fileID: 4393981173655792}
   infiniteBullets: 1
+  shootSound: {fileID: 0}
+  isAutomatic: 1
 --- !u!114 &114463205700942494
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -379,8 +385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gun: {fileID: 114429514582018410}
-  zPosMax: 5
-  zPosMin: -10
+  timeBeforeShoot: 2
 --- !u!136 &136150185339062052
 CapsuleCollider:
   m_ObjectHideFlags: 1

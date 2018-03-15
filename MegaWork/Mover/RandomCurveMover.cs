@@ -8,6 +8,9 @@ public class RandomCurveMover : MonoBehaviour {
     [SerializeField]
     float minM, maxM, minF, maxF, minS, maxS;
 
+    [SerializeField]
+    float xMult = 1, yMult = 0, zMult = 1;
+
     RandomCurve3 randomCurve;
     float time;
 
@@ -21,8 +24,9 @@ public class RandomCurveMover : MonoBehaviour {
     {
 
         time += Time.deltaTime;
+        Vector3 c = randomCurve.Value(time);
 
-        transform.position += randomCurve.Value(time);
+        transform.position += new Vector3(c.x * xMult, c.y * yMult, c.z * zMult);
 
     }
 }

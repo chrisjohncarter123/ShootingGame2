@@ -5,14 +5,21 @@ using UnityEngine;
 public class RobotWaveGenerator : MonoBehaviour {
     public float builderY = 5;
     public float builderRaidus = 40;
-    public float builderDegrees = 180;
-    public StateBranch endWave;
+    public float builderDegrees;
+    public GameObject[] winObjectsActivate;
+    public GameObject[] winObjectsDeactivate;
     public GameObject[] builders;
 
-    public int robotsCountStart;
-    public int robotsAddPerWave;
-    public int startingBuilders = 3;
-    public int wavesPerNewBuilder = 2;
+    public int robotsCountStart = 2;
+    public int robotsAddPerWave = 3;
+    public int startingBuilders = 1;
+    public int wavesPerNewBuilder = 5;
+    public float degreesPerWave = 10;
+    public float startingDegrees = 90;
+    public int startingHealth = 1;
+    public int healthPerWave = 1;
+
+    public PlayerHealth playerHealth;
 
  //   public float robotsCount;
 
@@ -20,7 +27,7 @@ public class RobotWaveGenerator : MonoBehaviour {
     int totalRobots = 0;
     bool ended = false;
     List<RobotBuilder> waveBuilders;
-
+    bool started = false;
 	// Use this for initialization
 	void Start () {
         waveBuilders = new List<RobotBuilder>();
@@ -30,20 +37,33 @@ public class RobotWaveGenerator : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(IsAllFinished() && !ended){
-            endWave.StartBranch();
+        if(started && IsAllFinished() && !ended){
+            for (int i = 0; i < winObjectsActivate.Length; i++)
+            {
+                winObjectsActivate[i].SetActive(true);
+            }
+
+            for (int i = 0; i < winObjectsDeactivate.Length; i++)
+            {
+                winObjectsDeactivate[i].SetActive(false);
+            }
+            PlayerPrefs.SetInt("Wave", PlayerPrefs.GetInt("Wave, 1") + 1);
             ended = true;
 
         }
+
 	}
     bool IsAllFinished(){
-        bool returnValue = false;
+        int robotsRemaining = 0;
         for (int i = 0; i < waveBuilders.Count; i++)
         {
-            EndWave();
-            returnValue = returnValue && waveBuilders[i].IsFinished();
+            Debug.Log(waveBuilders[i].name + " " + waveBuilders[i].GetReminingRobots());
+            robotsRemaining += waveBuilders[i].GetReminingRobots();
         }
-        return returnValue;
+         
+
+        Debug.Log(robotsRemaining == 0);
+        return (robotsRemaining == 0);
     }
     /*
     public void AddToRobotCount(int add){
@@ -72,27 +92,40 @@ public class RobotWaveGenerator : MonoBehaviour {
             Destroy(waveBuilders[i].gameObject);
         }
 
+
+
     }
     public void EndWave(){
         ClearAllWaveBuilders();
+        playerHealth.ResetHealth();
     }
+    [SerializeField]
+    float addDegrees;
     public void StartNextWave(){
+        started = true;
+        playerHealth.ResetHealth();
+
         ended = false;
-        int wave = PlayerPrefs.GetInt("Wave", 1);
+        int level = PlayerPrefs.GetInt("Level", 1);
 
-        int robotsThisWave = robotsCountStart + (wave * robotsAddPerWave);
-        int buildersThisWave = startingBuilders + (wave / wavesPerNewBuilder);
-
+        int robotsThisWave = robotsCountStart + (level * robotsAddPerWave);
+        int buildersThisWave = startingBuilders + (level / wavesPerNewBuilder);
+        builderDegrees = startingDegrees + (level * degreesPerWave);
         waveBuilders = new List<RobotBuilder>();
         for (int i = 0; i < buildersThisWave; i++){
             GameObject newBuilder = Instantiate(builders[Random.Range(0, builders.Length)]);
             waveBuilders.Add(newBuilder.GetComponent<RobotBuilder>());
+            newBuilder.GetComponent<RobotBuilder>().SetRobotWaveGenerator(this);
+            newBuilder.GetComponent<RobotBuilder>().SetHealth(startingHealth + level * healthPerWave);
 
             int robotsThisBuilder = robotsThisWave / builders.Length;
             newBuilder.GetComponent<RobotBuilder>().SetRobots(robotsThisBuilder);
             float totalRadians = builderDegrees * Mathf.Rad2Deg;
 
+
             float radians = totalRadians * 2  * i / (buildersThisWave);
+           
+            radians += Mathf.Deg2Rad * addDegrees;
             newBuilder.transform.position = new Vector3(
                 builderRaidus * Mathf.Cos(radians),
                 builderY,

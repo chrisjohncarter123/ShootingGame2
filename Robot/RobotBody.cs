@@ -3,56 +3,99 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RobotBody : MonoBehaviour {
+    //public Material bodyMaterial;
     GameObject robotParent;
     public int moneyReward = 10;
-    public Transform eyesPosition, nosePosition, mouthPosition, shooterPosition;
+    public Transform foodPosition, eyesPosition, nosePosition, mouthPosition, shooterPosition;
     public GameObject deathObject;
+    public GameObject hitObject;
     public int maxHealth = 3;
     int currentHealth;
     RobotWaveGenerator wave;
+    RobotBuilder robotBuilder;
 
 
+    public static int moneyEarnedThisWave = 0;
+
+    public void SetRobotBuilder(RobotBuilder robotBuilder){
+        this.robotBuilder = robotBuilder;
+    }
     public void SetRobotWaveGenerator(RobotWaveGenerator wave){
         this.wave = wave;
     }
 	// Use this for initialization
 	void Start () {
-        currentHealth = maxHealth;
+        
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        /*
+        float red = HealthPercentage() * 255;
+        Color color = new Color(red, 255, 255);
+
+        bodyMaterial.SetColor("_Tint", color);
+        */
+
+        if(Vector3.Distance(transform.position, wave.playerHealth.transform.position) <= 2){
+            wave.playerHealth.Dammage(1);
+            DestroyRobot();
+        }
 		
 	}
-
+    float HealthPercentage(){
+        return currentHealth / maxHealth;
+    }
+    public void SetHealth(int health){
+        maxHealth = health;
+        currentHealth = maxHealth;
+    }
     private void OnTriggerEnter(Collider other)
     {
         if(other.GetComponent<Bullet>()){
-            int dammage = other.GetComponent<Bullet>().GetDammage();
+            if (other.GetComponent<Bullet>().GetBulletType() == Bullet.BulletType.Player)
+            {
+                int dammage = other.GetComponent<Bullet>().GetDammage();
 
-            Dammage(dammage);
+                Dammage(dammage, other.transform.position);
+            }
 
         }
+        else if(other.GetComponent<PlayerHealth>()){
+            other.GetComponent<PlayerHealth>().Dammage(1);
+            DestroyRobot();
+
+        }
+
     }
 
     public void SetRobotParent(GameObject robotParent){
         this.robotParent = robotParent;
     }
-    private void DetachPart(Transform part){
-        
-    }
 
-    private void Dammage(int dammage){
+
+    public void Dammage(int dammage, Vector3 hitPosition){
         currentHealth -= dammage;
+        Debug.Log("Dammage " + dammage);
+
+        if (hitObject)
+        {
+            Instantiate(hitObject, hitPosition, hitObject.transform.rotation);
+        }
 
         if(currentHealth == 0){
             DestroyRobot();
         }
+
+
+
     }
 
     private void DestroyRobot(){
+        robotBuilder.DecrementRemainingRobots();
         PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money", 0) + moneyReward);
+        moneyEarnedThisWave += moneyReward;
         Instantiate(deathObject, transform.position, Quaternion.identity);
 //        wave.AddToRobotCount(-1);
         Destroy(robotParent);

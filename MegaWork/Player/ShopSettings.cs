@@ -8,6 +8,9 @@ public class ShopSettings : MonoBehaviour {
     public List<ShopPurchasable> purchasables;
     public GameObject guiObject;
     public Transform guiObjectParent;
+    public PlayerShooter playerShooter;
+    public bool createGUIElements = false;
+
     ShopPurchasable equiped;
 
     public ShopPurchasable GetEquiped(){
@@ -15,11 +18,18 @@ public class ShopSettings : MonoBehaviour {
     }
 	// Use this for initialization
 	void Start () {
-
-        for (int i = 0; i < purchasables.Count; i++){
-            purchasables[i].InitShopPurchasable(this);
+        if (createGUIElements)
+        {
+            for (int i = 0; i < purchasables.Count; i++)
+            {
+                purchasables[i].InitShopPurchasable(this);
+            }
         }
         UnequipAll();
+        if(!PlayerPrefs.HasKey(initialEquiped.purchasableName))
+        {
+            Purchase(initialEquiped);
+        }
 
         Equip(initialEquiped);
 	}
@@ -40,6 +50,7 @@ public class ShopSettings : MonoBehaviour {
         }
         equiped = purchasable;
         equiped.Equip();
+        playerShooter.gun = purchasable.weapon.GetComponent<Gun>();
        
     }
     public void UnequipAll(){

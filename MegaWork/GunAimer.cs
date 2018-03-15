@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GunAimer : MonoBehaviour {
-
+    Vector3 startingRotation;
+ 
 	// Use this for initialization
 	void Start () {
+        startingRotation = transform.localEulerAngles;
 		
 	}
 	
@@ -21,8 +23,21 @@ public class GunAimer : MonoBehaviour {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(screenX, screenY));
 
+        bool rotate = false;
         if(Physics.Raycast(ray, out hit)){
+
+            if (hit.collider.gameObject.GetComponent<RobotBody>())
+            {
+                rotate = true;
+
+            }
+        }
+
+        if(rotate){
             transform.LookAt(hit.point);
+        }
+        else {
+            transform.localEulerAngles = startingRotation;
         }
     }
 }

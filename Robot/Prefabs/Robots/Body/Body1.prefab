@@ -128,7 +128,7 @@ Transform:
   m_GameObject: {fileID: 1192653498610224}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 0.7250563}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4270582125149006}
   m_RootOrder: 0
@@ -223,7 +223,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1192653498610224}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -282,10 +282,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moneyReward: 10
+  foodPosition: {fileID: 4098909383188740}
   eyesPosition: {fileID: 4244813431962966}
   nosePosition: {fileID: 4737663579807682}
   mouthPosition: {fileID: 4514989806821744}
   shooterPosition: {fileID: 4250553360673812}
-  deathObject: {fileID: 1000011128802252, guid: 96730f8640590934eacb6f860058e7f9,
+  deathObject: {fileID: 1584924524414052, guid: f38228982a21343caade09d3d4ab77e2,
     type: 2}
+  hitObject: {fileID: 1078665099648242, guid: 1dff7dce4125847718886c11eeab91e9, type: 2}
   maxHealth: 1

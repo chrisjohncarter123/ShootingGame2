@@ -2,18 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class Gun : MonoBehaviour {
 
+    public enum FireType{
+        Bullet,
+        Insant
+    }
+
+    public FireType fireType = FireType.Bullet;
+    public int dammage;
     [SerializeField]
     ShootRecoil recoil;
 
     public GameObject[] randomBullet;
     public GameObject noBullets;
-    public GameObject muzzleFlare;
+    public ParticleSystem muzzleFlare;
     public float fireSpeed;
     public Transform bulletStart;
     public bool infiniteBullets = false;
     const float bulletLife = 5;
+
+    public AudioSource shootSound;
 
     [SerializeField]
     bool isAutomatic = true;
@@ -46,19 +57,39 @@ public class Gun : MonoBehaviour {
                 bulletsRemaining -= 1;
                 if (randomBullet.Length > 0)
                 {
-                    CreateBullet(randomBullet[Random.Range(0, randomBullet.Length)]);
+                    if (fireType == FireType.Bullet)
+                    {
+                        CreateBullet(randomBullet[Random.Range(0, randomBullet.Length)]);
+                    }
+                    else if(fireType == FireType.Insant){
+                        RaycastHit hit;
+                        Ray ray = new Ray(bulletStart.position, bulletStart.forward);
+
+                        if (Physics.Raycast(ray, out hit))
+                        {
+                            if(hit.collider.gameObject.GetComponent<RobotBody>()){
+                                hit.collider.gameObject.GetComponent<RobotBody>().Dammage(dammage, hit.point);
+                            }
+                        }
+                    }
                 }
                 if (recoil)
                 {
                     recoil.Recoil();
                 }
+                if(shootSound){
+                    shootSound.Play();
+                }
                 if(muzzleFlare){
-                    Instantiate(muzzleFlare, bulletStart.position, muzzleFlare.transform.rotation);
+                    muzzleFlare.Play();
                 }
 
             }
             else {
-                CreateBullet(noBullets);
+                if (noBullets)
+                {
+                    CreateBullet(noBullets);
+                }
             }
             lastShot = Time.time;
         }
@@ -68,9 +99,9 @@ public class Gun : MonoBehaviour {
         GameObject newBullet = Instantiate(
             bulletObject,
             bulletStart.position,
-            Quaternion.Euler(bulletStart.eulerAngles + bulletObject.transform.eulerAngles)
+            Quaternion.Euler(bulletStart.eulerAngles)
                                            );
-
+        newBullet.GetComponent<Bullet>().SetDammage(dammage);
         Destroy(newBullet, bulletLife);
     }
 

@@ -5,8 +5,15 @@ using UnityEngine;
 
 public class RobotBuilder : MonoBehaviour {
 
+    [SerializeField]
+    bool addFace = false;
+
+    [SerializeField]
+    bool addShooter = false;
+
     RobotWaveGenerator wave;
     public GameObject[] bodies;
+    public GameObject[] foods;
     public GameObject[] eyes;
     public GameObject[] mouths;
     public GameObject[] noses;
@@ -22,9 +29,12 @@ public class RobotBuilder : MonoBehaviour {
     public float waitTimeMin, waitTimeMax;
     float waitTime;
     float lastRobotCreate = 0;
-    int robots = 0;
+    int remainingRobots;
+    int health;
 
-
+    public void SetHealth(int health){
+        this.health = health;
+    }
     public void SetRobotWaveGenerator(RobotWaveGenerator wave)
     {
         this.wave = wave;
@@ -46,17 +56,29 @@ public class RobotBuilder : MonoBehaviour {
                 RandomizeWaitTime();
                 lastRobotCreate = Time.time;
                 BuildRobot();
-                robots--;
+                totalRobots--;
 
             }
         }
 		
 	}
+
+    public void DecrementRemainingRobots(){
+        remainingRobots -= 1;
+    }
+    public int GetReminingRobots(){
+        return remainingRobots;
+    }
+    public void SetRemainingRobots(int remainingRobots){
+        this.remainingRobots = remainingRobots;
+    }
     public void SetRobots(int robots){
-        this.robots = robots;
+        this.totalRobots = robots;
+        this.remainingRobots = robots;
+        RandomizeWaitTime();
     }
     public bool IsFinished(){
-        return robots == 0;
+        return (totalRobots <= 0);
     }
     private Vector3 RandomizeStartingPosition(){
 
@@ -76,7 +98,7 @@ public class RobotBuilder : MonoBehaviour {
             movers[Random.Range(0, movers.Length)],
             transform.position,
             Quaternion.identity);
-        Debug.Log(mover.transform.position);
+//        Debug.Log(mover.transform.position);
         mover.transform.parent = transform;
         mover.transform.localPosition = new Vector3(0, 0, 0);
 
@@ -92,15 +114,30 @@ public class RobotBuilder : MonoBehaviour {
 
         RobotBody robotBody = body.GetComponent<RobotBody>();
         robotBody.SetRobotParent(mover);
+        robotBody.SetRobotBuilder(this);
+        robotBody.SetRobotWaveGenerator(wave);
+        robotBody.SetHealth(health);
 
-        GameObject eye = Instantiate(eyes[Random.Range(0, eyes.Length)], robotBody.eyesPosition.position, robotBody.eyesPosition.rotation);
-        eye.transform.parent = robotBody.eyesPosition;
-        GameObject nose = Instantiate(noses[Random.Range(0, noses.Length)], robotBody.nosePosition.position, robotBody.nosePosition.rotation);
-        nose.transform.parent = robotBody.nosePosition;
-        GameObject mouth = Instantiate(mouths[Random.Range(0, mouths.Length)], robotBody.mouthPosition.position, robotBody.mouthPosition.rotation);
-        mouth.transform.parent = robotBody.mouthPosition;
-        GameObject shooter = Instantiate(shooters[Random.Range(0, shooters.Length)], robotBody.shooterPosition.position, robotBody.shooterPosition.rotation);
-        shooter.transform.parent = robotBody.shooterPosition;
+
+        GameObject food = Instantiate(foods[Random.Range(0, foods.Length)], robotBody.foodPosition.position, robotBody.foodPosition.rotation);
+        food.transform.parent = robotBody.foodPosition;
+
+        if (addShooter)
+        {
+            GameObject shooter = Instantiate(shooters[Random.Range(0, shooters.Length)], robotBody.shooterPosition.position, robotBody.shooterPosition.rotation);
+            shooter.transform.parent = robotBody.shooterPosition;
+        }
+
+        if (addFace)
+        {
+            GameObject eye = Instantiate(eyes[Random.Range(0, eyes.Length)], robotBody.eyesPosition.position, robotBody.eyesPosition.rotation);
+            eye.transform.parent = robotBody.eyesPosition;
+            GameObject nose = Instantiate(noses[Random.Range(0, noses.Length)], robotBody.nosePosition.position, robotBody.nosePosition.rotation);
+            nose.transform.parent = robotBody.nosePosition;
+            GameObject mouth = Instantiate(mouths[Random.Range(0, mouths.Length)], robotBody.mouthPosition.position, robotBody.mouthPosition.rotation);
+            mouth.transform.parent = robotBody.mouthPosition;
+        }
+       
 
     }
 }

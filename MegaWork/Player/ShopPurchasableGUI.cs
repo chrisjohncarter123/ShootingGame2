@@ -12,7 +12,7 @@ public class ShopPurchasableGUI : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         purchaseButton.onClick.AddListener(Purchase);
-        equipButton.onClick.AddListener(Equip);
+       // equipButton.onClick.AddListener(Equip);
 
 
         if(purchasableName)
@@ -50,7 +50,12 @@ public class ShopPurchasableGUI : MonoBehaviour {
     }
 
     void Purchase(){
-        purchasable.settings.Purchase(purchasable);
+        if(PlayerPrefs.GetInt("Money", 0) >= purchasable.moneyCost){
+            PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money") - purchasable.moneyCost);
+            purchasable.settings.Purchase(purchasable);
+        }
+
+
     }
     void Equip(){
         purchasable.settings.Equip(purchasable);

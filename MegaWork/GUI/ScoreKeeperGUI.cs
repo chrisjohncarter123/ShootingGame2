@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class ScoreKeeperGUI : MonoBehaviour {
 
 
-    public Text score, wave, money;
-    public string scorePrefix, wavePrefix, moneyPrefix;
+    public Text score, wave, money, moneyThisWave;
+    public string scorePrefix, wavePrefix, moneyPrefix, moneyThisWavePrefix;
 	// Use this for initialization
 	void Start () {
 		
@@ -20,6 +20,12 @@ public class ScoreKeeperGUI : MonoBehaviour {
         if(wave)
             wave.text = wavePrefix + PlayerPrefs.GetInt("Wave", 1).ToString();
         if(money)
-            money.text = moneyPrefix + PlayerPrefs.GetInt("Wave", 1).ToString();
+            money.text = moneyPrefix + PlayerPrefs.GetInt("Money", 1).ToString();
+        if (moneyThisWave)
+            moneyThisWave.text = moneyThisWavePrefix + RobotBody.moneyEarnedThisWave;
+
+
+
+
 	}
 }
