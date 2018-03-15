@@ -10,11 +10,27 @@ public class PlayerShop : MonoBehaviour {
 
     public Button healthButton, dammageButton, shootSpeedButton;
 
+    public string buyPrefix = "";
+
     public int costIncrese = 10;
+
+    public AudioSource healthSound, dammageSound, speedSound;
+
+    static int health, dammage, speed;
+
+    static bool inited = false;
+
+    static PlayerShop shop;
+
+    public PlayerHealth playerHealth;
 
 	// Use this for initialization
 	void Start () {
-		
+        healthButton.onClick.AddListener(BuyHealth);
+        dammageButton.onClick.AddListener(BuyDammage);
+        shootSpeedButton.onClick.AddListener(ButSpeed);
+        shop = this;
+        UpdateGUI();
 	}
 	
 	// Update is called once per frame
@@ -22,43 +38,70 @@ public class PlayerShop : MonoBehaviour {
         
 	}
 
-    void UpdateGUI(){
-        healthText.text = "BUY FOR " + GetCost("Health") + "$";
-        dammageText.text = "BUY FOR " + GetCost("Dammage") + "$";
-        shootSpeedText.text = "BUY FOR " + GetCost("Speed") + "$";
+    public static int GetDammage(){
+        if(!inited){
+            shop.UpdateGUI();
+        }
+        return dammage;
+    }
+    public static int GetHealth(){
+        if (!inited)
+        {
+            shop.UpdateGUI();
+        }
+        return health;
+    }
+    public static int GetSpeed(){
+        if (!inited)
+        {
+            shop.UpdateGUI();
+        }
+        return speed;
+    }
 
-        healthTextCurrent.text = PlayerPrefs.GetInt("Health").ToString();
-        dammageTextCurrent.text = PlayerPrefs.GetInt("Dammage").ToString();
-        shootSpeedTextCurrent.text = PlayerPrefs.GetInt("Shoot").ToString();
+    public void UpdateGUI(){
+        inited = true;
+        healthText.text = buyPrefix + GetCost("Health") + "$";
+        dammageText.text = buyPrefix + GetCost("Dammage") + "$";
+        shootSpeedText.text = buyPrefix + GetCost("Speed") + "$";
 
-        healthButton.onClick.AddListener(BuyHealth);
-        dammageButton.onClick.AddListener(BuyDammage);
-        shootSpeedButton.onClick.AddListener(ButSpeed);
+        health = PlayerPrefs.GetInt("Health", 5);
+        dammage = PlayerPrefs.GetInt("Dammage", 1);
+        speed = PlayerPrefs.GetInt("Speed", 1);
+
+        healthTextCurrent.text = health.ToString();
+        dammageTextCurrent.text = dammage.ToString();
+        shootSpeedTextCurrent.text = speed.ToString();
+
+        shop.playerHealth.SetMaxHealth(health);
+
     }
 
     void BuyHealth(){
-        Buy("Health");
+        Buy("Health", healthSound);
     }
-
     void BuyDammage(){
-        Buy("Dammage");
-
+        Buy("Dammage", dammageSound);
     }
-
     void ButSpeed(){
-        Buy("Speed");
+        Buy("Speed", speedSound);
     }
     int GetCost(string key){
         int value = PlayerPrefs.GetInt(key, 1);
         return value * costIncrese;
     }
-    void Buy(string key){
+    void Buy(string key, AudioSource audio){
+        
         int money = PlayerPrefs.GetInt("Money", 0);
         int cost = GetCost(key);
 
-        if(money <= cost){
+        Debug.Log(money + " " + cost);
+
+        if(money >= cost){
             PlayerPrefs.SetInt("Money", money - cost);
             PlayerPrefs.SetInt(key, cost + 1);
+            audio.Play();
+
         }
         UpdateGUI();
     }

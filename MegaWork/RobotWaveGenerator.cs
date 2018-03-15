@@ -18,6 +18,7 @@ public class RobotWaveGenerator : MonoBehaviour {
     public float startingDegrees = 90;
     public int startingHealth = 1;
     public int healthPerWave = 1;
+    public int moneyPerKillPerWave = 10;
 
     public PlayerHealth playerHealth;
 
@@ -32,6 +33,7 @@ public class RobotWaveGenerator : MonoBehaviour {
 	void Start () {
         waveBuilders = new List<RobotBuilder>();
         ClearAllWaveBuilders();
+        RobotBody.ResetTotalMoneyEarnedThisWave();
 		
 	}
 	
@@ -47,7 +49,9 @@ public class RobotWaveGenerator : MonoBehaviour {
             {
                 winObjectsDeactivate[i].SetActive(false);
             }
-            PlayerPrefs.SetInt("Wave", PlayerPrefs.GetInt("Wave, 1") + 1);
+            //PlayerPrefs.SetInt("Wave", PlayerPrefs.GetInt("Wave, 1") + 1);
+            PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money", 0) + RobotBody.GetTotalMoneyEarnedThisWave());
+            RobotBody.ResetTotalMoneyEarnedThisWave();
             ended = true;
 
         }
@@ -99,8 +103,8 @@ public class RobotWaveGenerator : MonoBehaviour {
         ClearAllWaveBuilders();
         playerHealth.ResetHealth();
     }
-    [SerializeField]
-    float addDegrees;
+    //[SerializeField]
+    //float addDegrees;
     public void StartNextWave(){
         started = true;
         playerHealth.ResetHealth();
@@ -117,6 +121,7 @@ public class RobotWaveGenerator : MonoBehaviour {
             waveBuilders.Add(newBuilder.GetComponent<RobotBuilder>());
             newBuilder.GetComponent<RobotBuilder>().SetRobotWaveGenerator(this);
             newBuilder.GetComponent<RobotBuilder>().SetHealth(startingHealth + level * healthPerWave);
+            newBuilder.GetComponent<RobotBuilder>().moneyRewardPerKill = moneyPerKillPerWave * level;
 
             int robotsThisBuilder = robotsThisWave / builders.Length;
             newBuilder.GetComponent<RobotBuilder>().SetRobots(robotsThisBuilder);
@@ -125,7 +130,7 @@ public class RobotWaveGenerator : MonoBehaviour {
 
             float radians = totalRadians * 2  * i / (buildersThisWave);
            
-            radians += Mathf.Deg2Rad * addDegrees;
+            //radians += Mathf.Deg2Rad * addDegrees;
             newBuilder.transform.position = new Vector3(
                 builderRaidus * Mathf.Cos(radians),
                 builderY,

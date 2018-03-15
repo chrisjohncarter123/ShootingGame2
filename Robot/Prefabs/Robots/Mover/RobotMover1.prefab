@@ -62,7 +62,7 @@ MonoBehaviour:
   minS: -20
   maxS: 20
   xMult: 1
-  yMult: 0.1
+  yMult: 0.5
   zMult: 1
 --- !u!114 &114410236901707108
 MonoBehaviour:

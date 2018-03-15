@@ -37,10 +37,12 @@ public class RobotBody : MonoBehaviour {
 
         bodyMaterial.SetColor("_Tint", color);
         */
-
+        if(!wave.playerHealth.GetIsAlive()){
+            Destroy(robotParent);
+        }
         if(Vector3.Distance(transform.position, wave.playerHealth.transform.position) <= 2){
             wave.playerHealth.Dammage(1);
-            DestroyRobot();
+            DestroyRobot(false);
         }
 		
 	}
@@ -64,12 +66,17 @@ public class RobotBody : MonoBehaviour {
         }
         else if(other.GetComponent<PlayerHealth>()){
             other.GetComponent<PlayerHealth>().Dammage(1);
-            DestroyRobot();
+            DestroyRobot(false);
 
         }
 
     }
-
+    public static int GetTotalMoneyEarnedThisWave(){
+        return moneyEarnedThisWave;
+    }
+    public static void ResetTotalMoneyEarnedThisWave(){
+        moneyEarnedThisWave = 0;
+    }
     public void SetRobotParent(GameObject robotParent){
         this.robotParent = robotParent;
     }
@@ -85,17 +92,19 @@ public class RobotBody : MonoBehaviour {
         }
 
         if(currentHealth == 0){
-            DestroyRobot();
+            DestroyRobot(true);
         }
 
 
 
     }
 
-    private void DestroyRobot(){
+    private void DestroyRobot(bool money){
         robotBuilder.DecrementRemainingRobots();
-        PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money", 0) + moneyReward);
-        moneyEarnedThisWave += moneyReward;
+        if (money)
+        {
+            moneyEarnedThisWave += moneyReward;
+        }
         Instantiate(deathObject, transform.position, Quaternion.identity);
 //        wave.AddToRobotCount(-1);
         Destroy(robotParent);

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DifficultyButton : MonoBehaviour {
 
-    public int max = 100, min = 0;
+    public int max = 100, min = 1;
     public Button increment, decrement;
     public Text text;
     public AudioSource clickSource;
@@ -14,13 +14,13 @@ public class DifficultyButton : MonoBehaviour {
 	void Start () {
         increment.onClick.AddListener(ButtonIncrement);
         decrement.onClick.AddListener(ButtonDecrement);
-                                      
+        Set(0);                              
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        text.text = PlayerPrefs.GetInt("Level").ToString();
+        
 		
 	}
 
@@ -39,9 +39,10 @@ public class DifficultyButton : MonoBehaviour {
         int current = PlayerPrefs.GetInt("Level");
         Debug.Log(current.ToString());
 
-        if (current + val < max && current + val > min)
+        if (current + val <= max && current + val >= min)
         {
             PlayerPrefs.SetInt("Level", current + val);
+            text.text = PlayerPrefs.GetInt("Level").ToString();
         }
 
 

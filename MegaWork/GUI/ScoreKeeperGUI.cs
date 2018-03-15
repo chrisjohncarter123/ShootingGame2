@@ -19,8 +19,8 @@ public class ScoreKeeperGUI : MonoBehaviour {
             score.text = scorePrefix + PlayerPrefs.GetInt("Score", 0).ToString();
         if(wave)
             wave.text = wavePrefix + PlayerPrefs.GetInt("Wave", 1).ToString();
-        if(money)
-            money.text = moneyPrefix + PlayerPrefs.GetInt("Money", 1).ToString();
+        if (money)
+            money.text = moneyPrefix + PlayerPrefs.GetInt("Money", 0);
         if (moneyThisWave)
             moneyThisWave.text = moneyThisWavePrefix + RobotBody.moneyEarnedThisWave;
 

@@ -31,6 +31,7 @@ public class RobotBuilder : MonoBehaviour {
     float lastRobotCreate = 0;
     int remainingRobots;
     int health;
+    public int moneyRewardPerKill;
 
     public void SetHealth(int health){
         this.health = health;

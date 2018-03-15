@@ -15,6 +15,7 @@ public class LinearMover : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate()
     {
+        
         Vector3 moveAdd = magnitude * Time.deltaTime;
         if (moveType == MoveType.Global)
         {

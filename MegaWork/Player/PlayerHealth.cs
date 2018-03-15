@@ -9,12 +9,17 @@ public class PlayerHealth : MonoBehaviour {
     public GameObject[] failObjectsDeactivate;
     public GameObject deathObject;
     public bool useDammageObject = false;
-    public int maxHealth = 1;
+    int maxHealth = 1;
     int currentHealth;
 
+    public void SetMaxHealth(int val){
+        this.maxHealth = val;
+        ResetHealth();
+    }
     // Use this for initialization
     void Start()
     {
+        maxHealth = PlayerShop.GetHealth();
         currentHealth = maxHealth;
 
     }
@@ -22,13 +27,16 @@ public class PlayerHealth : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-
+        maxHealth = PlayerShop.GetHealth();
     }
     public float Percentage(){
         return currentHealth / maxHealth;
     }
     public void ResetHealth(){
         currentHealth = maxHealth;
+    }
+    public int GetCurrentHealth(){
+        return currentHealth;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -66,9 +74,13 @@ public class PlayerHealth : MonoBehaviour {
             PlayerDeath();
         }
     }
-
+    public bool GetIsAlive(){
+        return currentHealth > 0; 
+    }
     private void PlayerDeath()
     {
+        Time.timeScale = 0;
+        Debug.Log("Died");
         Instantiate(deathObject,transform.position, deathObject.transform.rotation);
 
         for (int i = 0; i < failObjectsActivate.Length; i++){

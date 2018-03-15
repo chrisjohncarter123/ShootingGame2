@@ -6,19 +6,34 @@ public class PlayerShooter : MonoBehaviour {
 
 
     public Gun gun;
-
+    bool isShooting = false;
 	// Use this for initialization
 	void Start () {
+        EndShoot();
 		
 	}
-	
+    public void StartShoot(){
+        isShooting = true;
+
+    }
+
+    public void EndShoot(){
+        isShooting = false;
+    }
 	// Update is called once per frame
 	void Update () {
+        gun.dammage = PlayerShop.GetDammage();
+        gun.fireSpeed = 1 / ( Mathf.Log(5 + PlayerShop.GetSpeed()));
+
+        if (isShooting)
+        {
+            gun.gameObject.SendMessage("Shoot");
+        }
+
+        /*
         if (gun.GetIsAutomatic())
         {
-            if(Input.GetMouseButton(0)){
-                gun.gameObject.SendMessage("Shoot");
-            }
+            
 
         }
         else {
@@ -26,6 +41,7 @@ public class PlayerShooter : MonoBehaviour {
                 gun.gameObject.SendMessage("Shoot");
             }
         }
+        */
 		
 	}
 }

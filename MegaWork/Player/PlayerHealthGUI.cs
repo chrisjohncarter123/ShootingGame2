@@ -15,7 +15,7 @@ public class PlayerHealthGUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        healthText.text = prefix + (int)(health.Percentage() * 100) + suffix;
+        healthText.text = prefix + (health.GetCurrentHealth()) + suffix;
 		
 	}
 }
