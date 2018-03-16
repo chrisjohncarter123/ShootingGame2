@@ -11,6 +11,9 @@ public class RobotBuilder : MonoBehaviour {
     [SerializeField]
     bool addShooter = false;
 
+    [SerializeField]
+    bool addFood = false;
+
     RobotWaveGenerator wave;
     public GameObject[] bodies;
     public GameObject[] foods;
@@ -111,7 +114,7 @@ public class RobotBuilder : MonoBehaviour {
             bodies[bodyIndex].transform.rotation);
         body.transform.parent = mover.transform;
         body.transform.localPosition = Vector3.zero;
-        
+
 
         RobotBody robotBody = body.GetComponent<RobotBody>();
         robotBody.SetRobotParent(mover);
@@ -119,9 +122,11 @@ public class RobotBuilder : MonoBehaviour {
         robotBody.SetRobotWaveGenerator(wave);
         robotBody.SetHealth(health);
 
-
-        GameObject food = Instantiate(foods[Random.Range(0, foods.Length)], robotBody.foodPosition.position, robotBody.foodPosition.rotation);
-        food.transform.parent = robotBody.foodPosition;
+        if (addFood)
+        {
+            GameObject food = Instantiate(foods[Random.Range(0, foods.Length)], robotBody.foodPosition.position, robotBody.foodPosition.rotation);
+            food.transform.parent = robotBody.foodPosition;
+        }
 
         if (addShooter)
         {

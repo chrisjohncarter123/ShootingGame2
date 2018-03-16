@@ -391,14 +391,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 863209c5160c040b5ac43c5c29dab022, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  addFace: 0
+  addShooter: 0
+  addFood: 0
   bodies:
   - {fileID: 1240425049152800, guid: 83dec5cb2d4ef4e7eb421365008307cf, type: 2}
-  foods:
-  - {fileID: 1000010759889362, guid: 3245fc5926a7535429f2989cab01a844, type: 2}
-  - {fileID: 1000012997751318, guid: 0550765fb22bb954ea0412b7153ff417, type: 2}
-  - {fileID: 1000010864150500, guid: 07c1ce2b91eb18f4c83d7d36268a0341, type: 2}
-  - {fileID: 1000011448446114, guid: 8155176e03f33f44884efb0dd767197c, type: 2}
-  - {fileID: 1000011653470102, guid: 8d8015ded5f690247a600cc376e7b0e8, type: 2}
+  foods: []
   eyes:
   - {fileID: 1592787307538104, guid: 19931e5ec8cf14fadaf23828b5bf7aa6, type: 2}
   mouths:
@@ -415,6 +413,7 @@ MonoBehaviour:
   totalRobots: 10
   waitTimeMin: 0
   waitTimeMax: 15
+  moneyRewardPerKill: 0
 --- !u!135 &135840294135642536
 SphereCollider:
   m_ObjectHideFlags: 1
